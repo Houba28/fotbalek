@@ -18,19 +18,27 @@ screen.fill(BLACK)
 myfont = pygame.font.SysFont("monospace", 15)
 # set up the window
 screen = pygame.display.set_mode((480, 320))
-label = myfont.render("Some text!", 1, (255,255,0))
-screen.blit(label, (1, 1))
-
+pos = "Touch the screen"
+clock = pygame.time.Clock()
+time = pygame.time.get_ticks()
 # run the game loop
+
 while True:
+    screen.fill(BLACK)
+    label = myfont.render(str(pos), 1, (255,255,0))
+                screen.blit(label, (1, 1))
     for event in pygame.event.get():
             if event.type == QUIT:
                         pygame.quit()
                         sys.exit()
             if event.type == MOUSEBUTTONDOWN:
-            	pos = pygame.mouse.get_pos()
-            	label = myfont.render(str(pos), 1, (255,255,0))
-            	screen.fill(BLACK)
-            	screen.blit(label, (1, 1))
-
+                pos = pygame.mouse.get_pos()
+    
+    clock.tick(60)
+    atime = pygame.time.get_ticks()
+    timelabel = myfont.render(str(atime-time), 1, (255,255,0))
+    screen.blit(timelabel, (1, 17))
+    if atime - time > 60000:
+        pygame.quit()
+        sys.exit()
     pygame.display.update()
